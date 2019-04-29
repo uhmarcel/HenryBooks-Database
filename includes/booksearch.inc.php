@@ -22,12 +22,9 @@ $query = "SELECT title, onHand, branchName, authorFirst, authorLast, publisherNa
           WHERE title LIKE ? AND sequence = 1
           ORDER BY title ASC;";
 
-if ($stmt = mysqli_prepare($dbConn, $query)) {
-  mysqli_stmt_bind_param($stmt, "s", $search_criteria);
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
-  $resultRows = mysqli_num_rows($result);
-  mysqli_stmt_close($stmt);
+if ($stmt = pg_prepare($dbConn, "searchQuery", $query)) {
+  $result = pg_execute($dbConn, "searchQuery", array($search_criteria));
+  $resultRows = pg_num_rows($result);
 
   echo '<div class=container>';
   echo '<h3>Search results for "'.$user_search_input.'"</h4>';
@@ -42,7 +39,7 @@ if ($stmt = mysqli_prepare($dbConn, $query)) {
   echo "<div class='container shadow'>";
   echo "<table>";
   echo "<tr>";
-  $row = mysqli_fetch_assoc($result);
+  $row = pg_fetch_assoc($result);
   foreach ($row as $key => $header)
     echo "<th>".ucfirst($key)."</th>";
   echo "<tr>";
@@ -52,7 +49,7 @@ if ($stmt = mysqli_prepare($dbConn, $query)) {
     foreach ($row as $attribute)
       echo "<td>".$attribute."</td>";
     echo "</tr>";
-  } while ($row = mysqli_fetch_assoc($result));
+  } while ($row = pg_fetch_assoc($result));
 
   echo "</table>";
   echo "</div>";
