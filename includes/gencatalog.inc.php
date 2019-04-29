@@ -54,14 +54,14 @@ echo "<div class='spacer'></div><div class='container shadow'>";
 
 // Query
 $sql = "SELECT * FROM ".$currentTable.";";
-$result = mysqli_query($dbConn, $sql) or die("Bad query: ".$sql);
-$resultCheck = mysqli_num_rows($result);
+$result = pg_query($dbConn, $sql) or die("Bad query: ".$sql);
+$resultCheck = pg_num_rows($result);
 
 // Display table
 if ($resultCheck > 0) {
   echo "<table>";
   echo "<tr>";
-  $row = mysqli_fetch_assoc($result);
+  $row = pg_fetch_assoc($result);
   foreach ($row as $key => $header)
     echo "<th>".ucfirst($key)."</th>";
   echo "<tr>";
@@ -71,7 +71,7 @@ if ($resultCheck > 0) {
     foreach ($row as $attribute)
       echo "<td>".$attribute."</td>";
     echo "</tr>";
-  } while ($row = mysqli_fetch_assoc($result));
+  } while ($row = pg_fetch_assoc($result));
 
   echo "</table>";
 }
