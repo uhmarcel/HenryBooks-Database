@@ -11,5 +11,5 @@ $db = parse_url(getenv("DATABASE_URL"));
 $db["path"] = ltrim($db["path"], "/");
 
 $dbConn = mysqli_connect($db['host'], $db['user'], $db['pass'], $db['path']);
-echo $db['host'].' '.($db['user'].' '.($db['pass'].' '.($db['path'];
+echo $db['host'].' '.$db['user'].' '.$db['pass'].' '.$db['path'];
 ?>
