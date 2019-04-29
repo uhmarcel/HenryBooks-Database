@@ -6,7 +6,7 @@ if (!isset($_POST['booksearch-input'])) {
 }
 
 $user_search_input = $_POST['booksearch-input'];
-$search_criteria = "%".$user_search_input."%";
+$search_criteria = strtolower("%".$user_search_input."%");
 
 if (empty($user_search_input)) {
   header('Location: ./search.php?error=emptycriteria');
@@ -19,7 +19,7 @@ require 'dbconnect.inc.php';
 $query = "SELECT title, onHand, branchName, authorFirst, authorLast, publisherName
           FROM (((((Book NATURAL JOIN Wrote) NATURAL JOIN Author)
           NATURAL JOIN Publisher) NATURAL JOIN Inventory) NATURAL JOIN Branch)
-          WHERE title LIKE $1 AND sequence = 1
+          WHERE lower(title) LIKE $1 AND sequence = 1
           ORDER BY title ASC;";
 
 if ($stmt = pg_prepare($dbConn, "searchQuery", $query)) {

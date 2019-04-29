@@ -13,7 +13,7 @@ if ($_GET["action"] == "del") {
   $sql .= ";";
 
   // Execute query
-  mysqli_query($dbConn, $sql);
+  pg_query($dbConn, $sql);
   header('Location: ../manage.php?success');
   exit();
 }
@@ -36,7 +36,7 @@ else if ($_GET["action"] == "edit") {
   $sql .= ";";
 
   // Execute Query
-  mysqli_query($dbConn, $sql);
+  pg_query($dbConn, $sql);
   header('Location: ../manage.php?success');
   exit();
 }
@@ -52,10 +52,10 @@ else if (!empty($_POST)) {
   var_dump($sql);
 
   // Execute query
-  if (mysqli_query($dbConn, $sql))
+  if (pg_query($dbConn, $sql))
     $_SESSION['status'] = "Success";
   else
-    $_SESSION['status'] = "Error: ".mysqli_error($dbConn);
+    $_SESSION['status'] = "Error: ".pg_error($dbConn);
 
   header('Location: ../manage.php');
   exit();

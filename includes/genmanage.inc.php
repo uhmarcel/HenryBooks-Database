@@ -63,15 +63,15 @@ echo "<div class='spacer'></div><div class='container shadow'>";
 
 // Query
 $sql = "SELECT * FROM ".$currentTable.";";
-$result = mysqli_query($dbConn, $sql) or die("Bad query: ".$sql);
-$resultCheck = mysqli_num_rows($result);
+$result = pg_query($dbConn, $sql) or die("Bad query: ".$sql);
+$resultCheck = pg_num_rows($result);
 
 // Display table
 if ($resultCheck > 0) {
   // Build table headers
   echo "<table>"; // start table
   echo "<tr>"; // start header row
-  $row = mysqli_fetch_assoc($result);
+  $row = pg_fetch_assoc($result);
   foreach ($row as $key => $header)
     echo "<th>".ucfirst($key)."</th>";
   echo "<th colspan='2' class='active'>Manage</th>";
@@ -96,7 +96,7 @@ if ($resultCheck > 0) {
          .$count."';><i class='fa fa-trash' aria-hidden='true'></button></td>";
     echo "</tr>"; // end row
     $count++;
-  } while ($row = mysqli_fetch_assoc($result));
+  } while ($row = pg_fetch_assoc($result));
 
   // Build add row
   echo "<tr id='selected'>"; // start add row
