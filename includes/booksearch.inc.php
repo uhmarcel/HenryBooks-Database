@@ -19,7 +19,7 @@ require 'dbconnect.inc.php';
 $query = "SELECT title, onHand, branchName, authorFirst, authorLast, publisherName
           FROM (((((Book NATURAL JOIN Wrote) NATURAL JOIN Author)
           NATURAL JOIN Publisher) NATURAL JOIN Inventory) NATURAL JOIN Branch)
-          WHERE title LIKE ? AND sequence = 1
+          WHERE title LIKE $1 AND sequence = 1
           ORDER BY title ASC;";
 
 if ($stmt = pg_prepare($dbConn, "searchQuery", $query)) {
